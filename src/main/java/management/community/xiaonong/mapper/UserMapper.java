@@ -1,6 +1,9 @@
 package management.community.xiaonong.mapper;
 
+import management.community.xiaonong.dto.UserMgtDTO;
 import management.community.xiaonong.model.User;
+
+import java.util.List;
 
 public interface UserMapper {
     /**
@@ -18,4 +21,13 @@ public interface UserMapper {
      * @mbg.generated Wed Mar 25 17:01:12 CST 2020
      */
     int insertSelective(User record);
+
+    //查询所有用户
+    List<UserMgtDTO> selectAllUser(int offset,int size);
+
+    //用户数量
+    int selectUserCount();
+
+    //用户发帖数量
+    int selectTieCount(Long userId);
 }

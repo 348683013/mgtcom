@@ -28,7 +28,11 @@ public class LoginController {
     @Autowired
     private AdminService adminService;
 
+    //用来判断验证码是否正确
     String code = "";
+
+    //用来判断是否是登陆状态
+    public static String token1 = "";
 
     //跳转到登陆页面
     @RequestMapping("/")
@@ -42,6 +46,7 @@ public class LoginController {
                            @RequestParam(name = "password") String password,
                            @RequestParam(name = "verifycode") String verifycode,
                            HttpServletResponse response,
+                           HttpServletRequest request,
                            Model model) {
 
         model.addAttribute("username", username);
@@ -72,7 +77,11 @@ public class LoginController {
         if (a && code.equals(code1)) {
             //写一个cookie
             String token = UUID.randomUUID().toString();
+            token1 = token;
+
+//            request.getSession().setAttribute("token", token);
             response.addCookie(new Cookie("token", token));
+
             System.out.println("管理员==="+username+"===登陆");
             return "index";
         } else {
@@ -85,7 +94,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
-        request.getSession().removeAttribute("user");
+//        request.getSession().removeAttribute("user");
         Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/mystyle2.css">
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+    <div class="container-fluid bkstyle">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ztstyle">
+                <div th:insert="~{navigation :: nav}"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 ztstyle">
+                <h4>用户管理</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <td>ID</td>
+                        <td>账号</td>
+                        <td>姓名</td>
+                        <td>创建时间</td>
+                        <td>上次登陆时间</td>
+                        <td>发帖量</td>
+                    </tr>
+                    <div th:each="user:${pagination.data}">
+                        <tr>
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.accountId}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${#dates.format(user.gmtCreate,'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${#dates.format(user.gmtModified,'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${user.tieCount}"></td>
+                        </tr>
+                    </div>
+                </table>
+
+                <nav aria-label="Page navigation" style="float: right">
+                    <ul class="pagination">
+                        <li th:if="${pagination.showFirstPage}">
+                            <a href="/usermgt?page=1" aria-label="Previous">
+                                <span aria-hidden="true">&lt;&lt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pagination.showPrevious}">
+                            <a th:href="@{/usermgt?(page=${pagination.page-1})}" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+
+                        <li th:each="page:${pagination.pages}" th:class="${pagination.page==page}?'active':''">
+                            <a th:href="@{/usermgt?(page=${page})}" th:text="${page}"></a>
+                        </li>
+
+                        <li th:if="${pagination.showNext}">
+                            <a th:href="@{/usermgt?(page=${pagination.page+1})}" aria-label="Previous">
+                                <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pagination.showEndPage}">
+                            <a th:href="@{/usermgt?(page=${pagination.totalPage})}" aria-label="Previous">
+                                <span aria-hidden="true">&gt;&gt;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

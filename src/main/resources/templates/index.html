@@ -13,15 +13,7 @@
     <div class="container-fluid bkstyle">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ztstyle">
-                <nav>
-                    <ul class="nav nav-pills nav-stacked navbar-inverse">
-                        <li role="presentation" class="active"><a href="#" class="barstyle dtstyle"><h3 style="margin-top: 13px;">后台管理系统</h3></a></li>
-                        <li role="presentation"><a href="#" class="barstyle"><h4>用户管理</h4></a></li>
-                        <li role="presentation"><a href="#" class="barstyle"><h4>话题管理</h4></a></li>
-                        <li role="presentation"><a href="#" class="barstyle"><h4>评论管理</h4></a></li>
-                        <li role="presentation"><a href="logout" class="barstyle"><h4>退出登陆</h4></a></li>
-                    </ul>
-                </nav>
+                <div th:insert="~{navigation :: nav}"></div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 ztstyle">

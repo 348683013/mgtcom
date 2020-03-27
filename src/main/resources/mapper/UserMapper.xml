@@ -60,5 +60,18 @@
     </trim>
   </insert>
 
+  <!--分页查找所有用户-->
+  <select id="selectAllUser" resultType="management.community.xiaonong.dto.UserMgtDTO">
+    select * from user limit #{offset},#{size};
+  </select>
 
+  <!--用户数量-->
+  <select id="selectUserCount" resultType="java.lang.Integer">
+    select count(*) from user;
+  </select>
+
+  <!--用户发帖数量-->
+  <select id="selectTieCount" resultType="java.lang.Integer">
+    select  count(*) from question left join user on question.CREATOR=user.ID where user.ID=#{userId};
+  </select>
 </mapper>

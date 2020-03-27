@@ -6,6 +6,7 @@ package management.community.xiaonong.exception;
  */
 public enum  MgtErrorCode implements IMgtErrorCode {
     OPERATE_ERROR(3000, "操作失败"),
+    NO_LOGIN(3001, "用户未登录"),
     ;
 
     private String message;
