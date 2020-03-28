@@ -43,11 +43,12 @@ public class TopicMgtService {
 
         //limit的offset = size*(page-1)
         Integer offset = size * (page - 1);
+
         List<TopicMgtDTO> topicMgtDTOList = questionMapper.selectAllTopic(offset, size);
         List<IdToNameDTO> idToNameDTOList = questionMapper.selectTandU();
 
 
-        //把creator转换成name
+        //把creator转换成name,向topicMgtDTO里面添加name
         for (TopicMgtDTO topicMgtDTO : topicMgtDTOList) {
             for (IdToNameDTO idToNameDTO : idToNameDTOList) {
                 if (topicMgtDTO.getCreator() == idToNameDTO.getCreator()) {
@@ -64,5 +65,21 @@ public class TopicMgtService {
     //根据主键id查找用户
     public TopicMgtDTO findById(Long id) {
         return questionMapper.selectById(id);
+    }
+
+    //根据title关键词查找话题
+    public List<TopicMgtDTO> findByTitle(String topictitle) {
+        List<TopicMgtDTO> topicMgtDTOList = questionMapper.selectByTitle(topictitle);
+        List<IdToNameDTO> idToNameDTOList = questionMapper.selectTandU();
+
+        //把creator转换成name,向topicMgtDTO里面添加name
+        for (TopicMgtDTO topicMgtDTO : topicMgtDTOList) {
+            for (IdToNameDTO idToNameDTO : idToNameDTOList) {
+                if (topicMgtDTO.getCreator() == idToNameDTO.getCreator()) {
+                    topicMgtDTO.setName(idToNameDTO.getName());
+                }
+            }
+        }
+        return topicMgtDTOList;
     }
 }

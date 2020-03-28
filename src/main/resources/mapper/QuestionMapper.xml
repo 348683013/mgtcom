@@ -247,4 +247,9 @@
   <select id="selectById" resultType="management.community.xiaonong.dto.TopicMgtDTO">
     select * from question where id=#{id};
   </select>
+
+  <!--根据title关键词查找话题-->
+  <select id="selectByTitle" resultType="management.community.xiaonong.dto.TopicMgtDTO">
+    select * from question where title like '%${topictitle}%';
+  </select>
 </mapper>

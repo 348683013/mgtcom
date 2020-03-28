@@ -74,4 +74,7 @@ public interface QuestionMapper {
 
     //根据id查询话题
     TopicMgtDTO selectById(Long id);
+
+    //根据title关键词查找话题
+    List<TopicMgtDTO> selectByTitle(String topictitle);
 }

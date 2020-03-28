@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by zhouzhongzhong on 2020/3/28
@@ -22,6 +23,7 @@ public class TopicMgtController {
     @Autowired
     private TopicMgtService topicMgtService;
 
+    //所有话题并分页
     @RequestMapping("/topicmgt")
     public String topicmgt(@RequestParam(name = "page", defaultValue = "1") Integer page,
                            @RequestParam(name = "size", defaultValue = "13") Integer size,
@@ -39,6 +41,7 @@ public class TopicMgtController {
         return "topicMgt";
     }
 
+    //话题内容
     @RequestMapping("/topicmgt/{id}")
     public String topicdes(@PathVariable(name = "id") Long id,
                            Model model,
@@ -54,5 +57,29 @@ public class TopicMgtController {
 
         model.addAttribute("topicMgtDTO", topicMgtDTO);
         return "topicDescription";
+    }
+
+    //查询话题
+    @RequestMapping("/topicsearch")
+    public String topicsearch(@RequestParam(name = "topictitle") String topictitle,
+                              Model model,
+                              HttpServletRequest request) {
+        if (topictitle == null || topictitle == "") {
+            return "redirect:/topicmgt";
+        }
+
+        //判断是否登陆
+        boolean b = IsLogin.isLogin(request, model);
+        if (!b) {
+            model.addAttribute("message", MgtErrorCode.NO_LOGIN.getMessage());
+            return "error";
+        }
+
+        List<TopicMgtDTO> topicMgtDTOList = topicMgtService.findByTitle(topictitle);
+        PaginationDTO paginationDTO = new PaginationDTO();
+        paginationDTO.setData(topicMgtDTOList);
+        model.addAttribute("pagination", paginationDTO);
+        return "topicMgt";
+
     }
 }

@@ -1,7 +1,6 @@
 package management.community.xiaonong.controller;
 
 import management.community.xiaonong.dto.PaginationDTO;
-import management.community.xiaonong.dto.ResultDTO;
 import management.community.xiaonong.exception.MgtErrorCode;
 import management.community.xiaonong.service.UserMgtService;
 import management.community.xiaonong.utils.IsLogin;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
