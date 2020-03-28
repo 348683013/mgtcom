@@ -224,4 +224,22 @@
       TAG = #{tag,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+
+  <!--所有话题-->
+  <select id="selectAllTopic" resultType="management.community.xiaonong.dto.TopicMgtDTO">
+    select * from question limit #{offset},#{size};
+  </select>
+
+  <!--话题数-->
+  <select id="selectTopicCount" resultType="java.lang.Integer">
+    select count(*) from question;
+  </select>
+
+  <!--显示作者名-->
+  <select id="selectTandU" resultType="management.community.xiaonong.dto.IdToNameDTO">
+    select DISTINCT question.creator,user.name
+    from
+    question left join user
+    on question.creator=user.id;
+  </select>
 </mapper>

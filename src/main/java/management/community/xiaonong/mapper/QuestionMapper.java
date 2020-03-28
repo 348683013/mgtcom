@@ -1,6 +1,10 @@
 package management.community.xiaonong.mapper;
 
+import management.community.xiaonong.dto.IdToNameDTO;
+import management.community.xiaonong.dto.TopicMgtDTO;
 import management.community.xiaonong.model.Question;
+
+import java.util.List;
 
 public interface QuestionMapper {
     /**
@@ -58,4 +62,13 @@ public interface QuestionMapper {
      * @mbg.generated Wed Mar 25 17:01:12 CST 2020
      */
     int updateByPrimaryKey(Question record);
+
+    //查询所有话题
+    List<TopicMgtDTO> selectAllTopic(int offset,int size);
+
+    //话题总数
+    Integer selectTopicCount();
+
+    //question里的creator转换成user的name
+    List<IdToNameDTO> selectTandU();
 }

@@ -3,6 +3,7 @@ package management.community.xiaonong.mapper;
 import management.community.xiaonong.dto.UserMgtDTO;
 import management.community.xiaonong.model.User;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface UserMapper {
@@ -31,5 +32,6 @@ public interface UserMapper {
     //用户发帖数量
     int selectTieCount(Long userId);
 
+    //根据账号查找
     List<UserMgtDTO> selectByAccountId(String userAccountId);
 }

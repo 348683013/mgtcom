@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/mystyle2.css">
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+    <div class="container-fluid bkstyle">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ztstyle">
+                <div th:insert="~{navigation :: nav}"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 ztstyle">
+                <div>
+                     <h4>话题管理
+                        <nav style="float: right;margin-bottom: 6px">
+                            <form action="#" class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="userAccountId" placeholder="话题">
+                                </div>
+                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </form>
+                        </nav>
+                     </h4>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <td>话题</td>
+                        <td>内容</td>
+                        <td>作者</td>
+                        <td>创建时间</td>
+                        <td>评论数</td>
+                        <td>浏览量</td>
+                        <td>标签</td>
+                        <td>操作</td>
+                    </tr>
+                    <div th:each="topic:${pagination.data}">
+                        <tr>
+                            <td th:text="${topic.title}"></td>
+                            <td><a href="#">查看</a></td>
+                            <td th:text="${topic.name}"></td>
+                            <td th:text="${#dates.format(topic.gmtCreate,'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${topic.commentCount}"></td>
+                            <td th:text="${topic.viewCount}"></td>
+                            <td th:text="${topic.tag}"></td>
+                            <td><a href="#">删除</a></td>
+                        </tr>
+                    </div>
+                </table>
+
+                <nav aria-label="Page navigation" style="float: right">
+                    <ul class="pagination">
+                        <li th:if="${pagination.showFirstPage}">
+                            <a href="/topicmgt?page=1" aria-label="Previous">
+                                <span aria-hidden="true">&lt;&lt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pagination.showPrevious}">
+                            <a th:href="@{/topicmgt?(page=${pagination.page-1})}" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+
+                        <li th:each="page:${pagination.pages}" th:class="${pagination.page==page}?'active':''">
+                            <a th:href="@{/topicmgt?(page=${page})}" th:text="${page}"></a>
+                        </li>
+
+                        <li th:if="${pagination.showNext}">
+                            <a th:href="@{/topicmgt?(page=${pagination.page+1})}" aria-label="Previous">
+                                <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pagination.showEndPage}">
+                            <a th:href="@{/topicmgt?(page=${pagination.totalPage})}" aria-label="Previous">
+                                <span aria-hidden="true">&gt;&gt;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
