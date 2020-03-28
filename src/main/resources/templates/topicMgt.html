@@ -49,7 +49,7 @@
                             <td th:text="${topic.commentCount}"></td>
                             <td th:text="${topic.viewCount}"></td>
                             <td th:text="${topic.tag}"></td>
-                            <td><a href="#">删除</a></td>
+                            <td><a th:href="@{'/topicmgtdel/'+${topic.id}}" style="color: red;">删除</a></td>
                         </tr>
                     </div>
                 </table>

@@ -82,4 +82,14 @@ public class TopicMgtService {
         }
         return topicMgtDTOList;
     }
+
+    //删除相应话题
+    public boolean delById(Long id) {
+        int delCount = questionMapper.deleteByPrimaryKey(id);
+        if (delCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

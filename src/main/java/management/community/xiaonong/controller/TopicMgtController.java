@@ -41,7 +41,7 @@ public class TopicMgtController {
         return "topicMgt";
     }
 
-    //话题内容
+    //查看话题内容
     @RequestMapping("/topicmgt/{id}")
     public String topicdes(@PathVariable(name = "id") Long id,
                            Model model,
@@ -80,6 +80,29 @@ public class TopicMgtController {
         paginationDTO.setData(topicMgtDTOList);
         model.addAttribute("pagination", paginationDTO);
         return "topicMgt";
+
+    }
+
+    //删除相应话题
+    @RequestMapping("/topicmgtdel/{id}")
+    public String topicmgtdel(@PathVariable(name = "id") Long id,
+                           Model model,
+                           HttpServletRequest request) {
+        //判断是否登陆
+        boolean b = IsLogin.isLogin(request, model);
+        if (!b) {
+            model.addAttribute("message", MgtErrorCode.NO_LOGIN.getMessage());
+            return "error";
+        }
+
+        boolean isDel = topicMgtService.delById(id);
+
+        if (isDel) {
+            return "redirect:/topicmgt";
+        } else {
+            model.addAttribute("message", MgtErrorCode.DEL_FAIL.getMessage());
+            return "error";
+        }
 
     }
 }
