@@ -23,7 +23,7 @@ public class UserMgtController {
     @Autowired
     private UserMgtService userMgtService;
 
-    //跳转到用户管理页面
+    //跳转到用户管理页面，查询所有用户
     @RequestMapping("/usermgt")
     public Object usermgt(@RequestParam(name = "page", defaultValue = "1") Integer page,
                           @RequestParam(name = "size", defaultValue = "13") Integer size,
@@ -38,6 +38,28 @@ public class UserMgtController {
         }
 
         PaginationDTO paginationDTO = userMgtService.findAllUser(page,size);
+        model.addAttribute("pagination", paginationDTO);
+        return "userMgt";
+    }
+
+    //跳转到用户管理页面，查询指定账号用户
+    @RequestMapping("/usersearch")
+    public Object usermgt(@RequestParam(name = "userAccountId") String userAccountId,
+                          Model model,
+                          HttpServletRequest request) {
+
+        if (userAccountId == null || userAccountId == "") {
+            return "redirect:/usermgt";
+        }
+
+        //判断是否登陆
+        boolean b = IsLogin.isLogin(request, model);
+        if (!b) {
+            model.addAttribute("message", MgtErrorCode.NO_LOGIN.getMessage());
+            return "error";
+        }
+
+        PaginationDTO paginationDTO = userMgtService.findByAccountId(userAccountId);
         model.addAttribute("pagination", paginationDTO);
         return "userMgt";
     }

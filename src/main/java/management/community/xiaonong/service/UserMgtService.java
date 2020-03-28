@@ -17,10 +17,14 @@ public class UserMgtService {
     @Autowired
     private UserMapper userMapper;
 
+    Integer totalCount;
+
     public PaginationDTO findAllUser(int page, int size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = userMapper.selectUserCount();
+
+        //查询发帖量
+        totalCount = userMapper.selectUserCount();
 
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
@@ -43,10 +47,23 @@ public class UserMgtService {
 
         List<UserMgtDTO> userMgtDTOList = userMapper.selectAllUser(offset, size);
 
+        //把发帖数放进去
         for (UserMgtDTO userMgtDTO : userMgtDTOList) {
             userMgtDTO.setTieCount(userMapper.selectTieCount(userMgtDTO.getId()));
         }
 
+        paginationDTO.setData(userMgtDTOList);
+        return paginationDTO;
+    }
+
+    public PaginationDTO findByAccountId(String userAccountId) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        List<UserMgtDTO> userMgtDTOList;
+        userMgtDTOList = userMapper.selectByAccountId(userAccountId);
+        //把发帖数放进去
+        for (UserMgtDTO userMgtDTO : userMgtDTOList) {
+            userMgtDTO.setTieCount(userMapper.selectTieCount(userMgtDTO.getId()));
+        }
         paginationDTO.setData(userMgtDTOList);
         return paginationDTO;
     }

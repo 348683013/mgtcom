@@ -74,4 +74,9 @@
   <select id="selectTieCount" resultType="java.lang.Integer">
     select  count(*) from question left join user on question.CREATOR=user.ID where user.ID=#{userId};
   </select>
+
+  <!--根据账号查询用户-->
+  <select id="selectByAccountId" resultType="management.community.xiaonong.dto.UserMgtDTO">
+    select * from user where account_id=#{userAccountId};
+  </select>
 </mapper>

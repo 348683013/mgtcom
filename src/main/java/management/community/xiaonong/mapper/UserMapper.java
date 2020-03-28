@@ -30,4 +30,6 @@ public interface UserMapper {
 
     //用户发帖数量
     int selectTieCount(Long userId);
+
+    List<UserMgtDTO> selectByAccountId(String userAccountId);
 }
