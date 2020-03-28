@@ -242,4 +242,9 @@
     question left join user
     on question.creator=user.id;
   </select>
+
+  <!--根据id查询话题-->
+  <select id="selectById" resultType="management.community.xiaonong.dto.TopicMgtDTO">
+    select * from question where id=#{id};
+  </select>
 </mapper>

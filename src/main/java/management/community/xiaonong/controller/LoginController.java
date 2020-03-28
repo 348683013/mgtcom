@@ -80,7 +80,7 @@ public class LoginController {
             token1 = token;
 
 //            request.getSession().setAttribute("token", token);
-            response.addCookie(new Cookie("token", token));
+            response.addCookie(new Cookie("tokenmgt", token));
 
             System.out.println("管理员==="+username+"===登陆");
             return "index";
@@ -95,7 +95,7 @@ public class LoginController {
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
 //        request.getSession().removeAttribute("user");
-        Cookie cookie = new Cookie("token", null);
+        Cookie cookie = new Cookie("tokenmgt", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         return "redirect:/";

@@ -1,12 +1,14 @@
 package management.community.xiaonong.controller;
 
 import management.community.xiaonong.dto.PaginationDTO;
+import management.community.xiaonong.dto.TopicMgtDTO;
 import management.community.xiaonong.exception.MgtErrorCode;
 import management.community.xiaonong.service.TopicMgtService;
 import management.community.xiaonong.utils.IsLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,5 +37,22 @@ public class TopicMgtController {
         PaginationDTO paginationDTO = topicMgtService.findAllTopic(page, size);
         model.addAttribute("pagination", paginationDTO);
         return "topicMgt";
+    }
+
+    @RequestMapping("/topicmgt/{id}")
+    public String topicdes(@PathVariable(name = "id") Long id,
+                           Model model,
+                           HttpServletRequest request) {
+        //判断是否登陆
+        boolean b = IsLogin.isLogin(request, model);
+        if (!b) {
+            model.addAttribute("message", MgtErrorCode.NO_LOGIN.getMessage());
+            return "error";
+        }
+
+        TopicMgtDTO topicMgtDTO = topicMgtService.findById(id);
+
+        model.addAttribute("topicMgtDTO", topicMgtDTO);
+        return "topicDescription";
     }
 }

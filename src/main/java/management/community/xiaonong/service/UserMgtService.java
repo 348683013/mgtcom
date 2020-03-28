@@ -19,6 +19,7 @@ public class UserMgtService {
 
     Integer totalCount;
 
+//    查找所有用户
     public PaginationDTO findAllUser(int page, int size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
@@ -56,6 +57,7 @@ public class UserMgtService {
         return paginationDTO;
     }
 
+    //根据账号查找用户
     public PaginationDTO findByAccountId(String userAccountId) {
         PaginationDTO paginationDTO = new PaginationDTO();
         List<UserMgtDTO> userMgtDTOList;

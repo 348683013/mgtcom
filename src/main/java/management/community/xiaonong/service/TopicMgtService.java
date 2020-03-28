@@ -60,4 +60,9 @@ public class TopicMgtService {
 
         return paginationDTO;
     }
+
+    //根据主键id查找用户
+    public TopicMgtDTO findById(Long id) {
+        return questionMapper.selectById(id);
+    }
 }

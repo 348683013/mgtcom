@@ -19,7 +19,7 @@ public class IsLogin {
         for (Cookie cookie : cookies) {
             String cookie1 = cookie.getName();
             String cookie1v = cookie.getValue();
-            if (cookie1.equals("token") && cookie1v.equals(LoginController.token1)) {
+            if (cookie1.equals("tokenmgt") && cookie1v.equals(LoginController.token1)) {
                 b = true;
             }
         }

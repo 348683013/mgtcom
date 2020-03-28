@@ -71,4 +71,7 @@ public interface QuestionMapper {
 
     //question里的creator转换成user的name
     List<IdToNameDTO> selectTandU();
+
+    //根据id查询话题
+    TopicMgtDTO selectById(Long id);
 }
