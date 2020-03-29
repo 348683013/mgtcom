@@ -47,7 +47,7 @@
                         <td th:text="${comment.name}"></td>
                         <td th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="${comment.commentCount}"></td>
-                        <td><a href="#" style="color: red;">删除</a></td>
+                        <td><a th:href="@{'/commentdel/'+${comment.id}}" style="color: red;">删除</a></td>
                         <!--<td><a type="button" onclick="del()" class="btn btn-danger">删除</a></td>-->
                     </tr>
                 </div>

@@ -8,6 +8,7 @@ import management.community.xiaonong.utils.IsLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -60,5 +61,28 @@ public class CommentMgtController {
         PaginationDTO paginationDTO = commentService.searchComment(content);
         model.addAttribute("pagination", paginationDTO);
         return "commentMgt";
+    }
+
+    //删除指定评论
+    @RequestMapping("/commentdel/{id}")
+    public String delComment(@PathVariable(name = "id") Long id,
+                             Model model,
+                             HttpServletRequest request) {
+        //判断是否登陆
+        boolean b = IsLogin.isLogin(request, model);
+        if (!b) {
+            model.addAttribute("message", MgtErrorCode.NO_LOGIN.getMessage());
+            return "error";
+        }
+
+        boolean isDel = commentService.delById(id);
+
+        if (isDel) {
+            return "redirect:/commentmgt";
+        } else {
+            model.addAttribute("message", MgtErrorCode.DEL_FAIL.getMessage());
+            return "error";
+        }
+
     }
 }

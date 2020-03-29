@@ -57,4 +57,13 @@ public class CommentService {
         paginationDTO.setData(commentMgtDTOList);
         return paginationDTO;
     }
+
+    public boolean delById(Long id) {
+        int delCount = commentMapper.deleteByPrimaryKey(id);
+        if (delCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
