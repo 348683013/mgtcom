@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>评论管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/mystyle2.css">
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div class="container-fluid bkstyle">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ztstyle">
+            <div th:insert="~{navigation :: nav}"></div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 ztstyle">
+            <div>
+                <h4>评论管理
+                    <nav style="float: right;margin-bottom: 6px">
+                        <form action="/commentsearch" class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="content" placeholder="评论（完整）">
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </form>
+                    </nav>
+                </h4>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <td>被评论话题</td>
+                    <td>评论等级</td>
+                    <td>评论内容</td>
+                    <td>评论者</td>
+                    <td>评论时间</td>
+                    <td>子评论数</td>
+                    <td>操作</td>
+                </tr>
+                <div th:each="comment:${pagination.data}">
+                    <tr>
+                        <td th:text="${comment.title}"></td>
+                        <td th:text="${comment.type}"></td>
+                        <td th:text="${comment.content}"></td>
+                        <td th:text="${comment.name}"></td>
+                        <td th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${comment.commentCount}"></td>
+                        <td><a href="#" style="color: red;">删除</a></td>
+                        <!--<td><a type="button" onclick="del()" class="btn btn-danger">删除</a></td>-->
+                    </tr>
+                </div>
+            </table>
+
+            <nav aria-label="Page navigation" style="float: right">
+                <ul class="pagination">
+                    <li th:if="${pagination.showFirstPage}">
+                        <a href="/commentmgt?page=1" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showPrevious}">
+                        <a th:href="@{/commentmgt?(page=${pagination.page-1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page:${pagination.pages}" th:class="${pagination.page==page}?'active':''">
+                        <a th:href="@{/commentmgt?(page=${page})}" th:text="${page}"></a>
+                    </li>
+
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{/commentmgt?(page=${pagination.page+1})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{/commentmgt?(page=${pagination.totalPage})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

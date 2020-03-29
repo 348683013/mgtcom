@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/mystyle2.css">
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script type="text/javascript">
+        function del(){
+            if(confirm('确定删除吗？删除后不可恢复！')){
+                alert("删除成功！");
+                return true;
+            }else{
+                alert("删除失败！");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container-fluid bkstyle">
@@ -22,7 +33,7 @@
                         <nav style="float: right;margin-bottom: 6px">
                             <form action="/topicsearch" class="form-inline">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="topictitle" placeholder="话题">
+                                    <input type="text" class="form-control" name="topictitle" placeholder="话题（关键字）">
                                 </div>
                                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </form>
@@ -50,6 +61,7 @@
                             <td th:text="${topic.viewCount}"></td>
                             <td th:text="${topic.tag}"></td>
                             <td><a th:href="@{'/topicmgtdel/'+${topic.id}}" style="color: red;">删除</a></td>
+                            <!--<td><a type="button" onclick="del()" class="btn btn-danger">删除</a></td>-->
                         </tr>
                     </div>
                 </table>

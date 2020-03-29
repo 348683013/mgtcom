@@ -1,6 +1,10 @@
 package management.community.xiaonong.mapper;
 
+import management.community.xiaonong.dto.CommentMgtDTO;
+import management.community.xiaonong.dto.PaginationDTO;
 import management.community.xiaonong.model.Comment;
+
+import java.util.List;
 
 public interface CommentMapper {
     /**
@@ -50,4 +54,13 @@ public interface CommentMapper {
      * @mbg.generated Wed Mar 25 17:01:12 CST 2020
      */
     int updateByPrimaryKey(Comment record);
+
+    //查找所有评论
+    List<CommentMgtDTO> selectAllComment(int offset,int size);
+
+    //评论总量
+    Integer selectCommentCount();
+
+    //查找评论
+    List<CommentMgtDTO> searchComment(String content);
 }

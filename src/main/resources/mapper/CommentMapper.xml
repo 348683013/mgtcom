@@ -179,4 +179,32 @@
       COMMENT_COUNT = #{commentCount,jdbcType=INTEGER}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+
+  <!--查找所有评论-->
+  <select id="selectAllComment" resultType="management.community.xiaonong.dto.CommentMgtDTO">
+    select user.name,a.*
+    from user inner join
+    (select
+    comment.PARENT_ID,question.TITLE,comment.TYPE,comment.COMMENTATOR,comment.GMT_CREATE,comment.CONTENT,comment.COMMENT_COUNT
+    from comment left join question
+    on comment.PARENT_ID=question.ID) as a
+    on user.ID=a.COMMENTATOR
+      ORDER BY a.GMT_CREATE desc
+      limit #{offset},#{size};
+  </select>
+
+  <!--评论总量-->
+  <select id="selectCommentCount" resultType="java.lang.Integer">
+    select count(*) from comment;
+  </select>
+
+  <!--查找评论-->
+  <select id="searchComment" resultType="management.community.xiaonong.dto.CommentMgtDTO">
+    select * from
+    (select user.name,a.* from user inner join
+    (select comment.PARENT_ID,question.TITLE,comment.TYPE,comment.COMMENTATOR,comment.GMT_CREATE,comment.CONTENT,comment.COMMENT_COUNT
+    from comment left join question on comment.PARENT_ID=question.ID) as a
+    on user.ID=a.COMMENTATOR ORDER BY a.GMT_CREATE desc) as b
+    where b.CONTENT=#{content};
+  </select>
 </mapper>
